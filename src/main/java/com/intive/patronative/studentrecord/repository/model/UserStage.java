@@ -1,8 +1,11 @@
 package com.intive.patronative.studentrecord.repository.model;
 
 import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
 
 import javax.persistence.Column;
 import javax.persistence.EmbeddedId;
@@ -13,6 +16,9 @@ import javax.persistence.MapsId;
 import javax.persistence.Table;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "user_stage", schema = "student_record")
 public class UserStage {
