@@ -1,9 +1,14 @@
 package com.intive.patronative.studentrecord.repository.model;
 
 import lombok.AccessLevel;
+import lombok.AccessLevel;
+import lombok.AllArgsConstructor;
+import lombok.Builder;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
+import lombok.NoArgsConstructor;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -19,6 +24,9 @@ import java.math.BigDecimal;
 import java.util.Set;
 
 @Data
+@Builder
+@AllArgsConstructor
+@NoArgsConstructor
 @Entity
 @Table(name = "user", schema = "student_record")
 @EqualsAndHashCode(exclude = {"id", "userStages"})
@@ -47,6 +55,7 @@ public class User {
     private Status status;
 
     @OneToMany(mappedBy = "user")
+    @ToString.Exclude
     private Set<UserStage> userStages;
 
 }

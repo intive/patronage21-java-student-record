@@ -14,9 +14,40 @@ spring:
       hibernate:
         dialect: org.hibernate.dialect.PostgreSQLDialect
         globally_quoted_identifiers: true
+  servlet:
+    multipart:
+      max-file-size: 512KB
 validators:
   search:
     user:
       data:
         length:
           min: 2
+  user:
+    first-name:
+      length:
+        min: 2
+        max: 30
+    last-name:
+      length:
+        min: 2
+        max: 30
+    login:
+      length:
+        min: 2
+        max: 15
+    email-username:
+      length:
+        min: 3
+        max: 30
+    phone-number:
+      length: 9
+    github-username:
+      length:
+        min: 4
+        max: 39
+    projects:
+      maximum-participation: 5
+    technology-groups:
+      minimum-participation: 1
+      maximum-participation: 3

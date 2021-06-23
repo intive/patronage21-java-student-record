@@ -4,6 +4,7 @@ import lombok.AccessLevel;
 import lombok.Data;
 import lombok.EqualsAndHashCode;
 import lombok.Setter;
+import lombok.ToString;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -44,6 +45,7 @@ public class Stage {
     private TechnologyGroup technologyGroup;
 
     @OneToMany(mappedBy = "stage")
+    @ToString.Exclude
     private Set<UserStage> userStages;
 
 }

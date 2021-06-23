@@ -1,12 +1,17 @@
 package com.intive.patronative.studentrecord.controller.advice;
 
+import com.intive.patronative.studentrecord.exception.AlreadyExistsException;
 import com.intive.patronative.studentrecord.exception.EntityNotFoundException;
 import com.intive.patronative.studentrecord.exception.InvalidArgumentException;
 import lombok.AllArgsConstructor;
 import lombok.Data;
 import lombok.NoArgsConstructor;
 import lombok.Value;
+import org.apache.tomcat.util.http.fileupload.impl.FileSizeLimitExceededException;
+import org.apache.tomcat.util.http.fileupload.impl.SizeLimitExceededException;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
 import org.springframework.validation.FieldError;
 import org.springframework.web.bind.annotation.ControllerAdvice;
 import org.springframework.web.bind.annotation.ExceptionHandler;
@@ -32,6 +37,33 @@ public class UserControllerAdvice {
     @ExceptionHandler(EntityNotFoundException.class)
     public ValidationErrorResponse entityNotFoundHandler(final EntityNotFoundException exception) {
         return buildErrorResponse(Collections.singletonList(exception.getFieldError()));
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.CONFLICT)
+    @ExceptionHandler(AlreadyExistsException.class)
+    public ValidationErrorResponse alreadyExistException(final AlreadyExistsException exception) {
+        return buildErrorResponse(Collections.singletonList(exception.getFieldError()));
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(FileSizeLimitExceededException.class)
+    public ResponseEntity<ValidationErrorResponse> fileSizeLimitExceededHandler(final FileSizeLimitExceededException exception) {
+        return ResponseEntity
+                .unprocessableEntity()
+                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
+                .body(buildErrorResponse((new ViolationError(exception.getFieldName(), exception.getFileName(), exception.getMessage()))));
+    }
+
+    @ResponseBody
+    @ResponseStatus(HttpStatus.UNPROCESSABLE_ENTITY)
+    @ExceptionHandler(SizeLimitExceededException.class)
+    public ResponseEntity<ValidationErrorResponse> sizeLimitExceededExceptionHandler(final SizeLimitExceededException exception) {
+        return ResponseEntity
+                .unprocessableEntity()
+                .header(HttpHeaders.ACCESS_CONTROL_ALLOW_ORIGIN, "*")
+                .body(buildErrorResponse((new ViolationError("image", null, exception.getMessage()))));
     }
 
     @Data
