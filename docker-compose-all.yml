@@ -12,7 +12,7 @@ services:
     depends_on:
       - "postgres"
     environment:
-      SPRING_DATASOURCE_URL: jdbc:postgresql://patronative_db:5432/patronative
+      SPRING_DATASOURCE_URL: jdbc:postgresql://sr_patronative_db:5432/patronative
 
   postgres:
     image: postgres:13.3-alpine
