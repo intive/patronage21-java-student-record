@@ -1,0 +1,22 @@
+spring:
+  datasource:
+    url: jdbc:postgresql://localhost:5432/patronative
+    username: admin
+    password: p4tron4tiv3
+    driverClassName: org.postgresql.Driver
+  flyway:
+    schemas: student_record
+  jpa:
+    show-sql: true
+    hibernate:
+      ddl-auto: validate
+    properties:
+      hibernate:
+        dialect: org.hibernate.dialect.PostgreSQLDialect
+        globally_quoted_identifiers: true
+validators:
+  search:
+    user:
+      data:
+        length:
+          min: 2
